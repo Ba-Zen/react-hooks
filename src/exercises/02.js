@@ -4,23 +4,28 @@
 
 import React from 'react'
 
-// 🐨 Make a custom hook called useCounter that accepts the step and
-// initialCount and returns the count and increment functions
-
-function Counter({step = 1, initialCount = 0}) {
-  // 💣 remove this (or move it to your custom hook)
+function useCounter({step = 1, initialCount = 0} = {}) {
   const [count, setCount] = React.useState(initialCount)
   const increment = () => setCount(c => c + step)
-  // 🐨 Use your custom useCounter hook to get `count` and `increment`
-  return <button onClick={increment}>{count}</button>
+  return [count, increment]
 }
 
-////////////////////////////////////////////////////////////////////
-//                                                                //
-//                 Don't make changes below here.                 //
-// But do look at it to see how your code is intended to be used. //
-//                                                                //
-////////////////////////////////////////////////////////////////////
+function Counter({step, initialCount}) {
+  const [count, setCount] = useCounter({step, initialCount})
+  const increment = () => setCount(c => c + step)
+  return (
+    <button
+      style={{
+        backgroundColor: 'red',
+        height: '40px',
+        width: '120px',
+      }}
+      onClick={increment}
+    >
+      {count}
+    </button>
+  )
+}
 
 function Usage() {
   return <Counter />
